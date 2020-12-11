@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "822199892407",
+    "firebase_url": "https://zeus-2ac88.firebaseio.com",
+    "project_id": "zeus-2ac88",
+    "storage_bucket": "zeus-2ac88.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:822199892407:android:8dcb1dc8ee665fc73b5032",
+        "android_client_info": {
+          "package_name": "com.rishav.zeus"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "822199892407-34dg3usk0b9kufik8grtgt5sqen2rsba.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.rishav.zeus",
+            "certificate_hash": "1f1f8f93c27ddb6d6aa38670115672d53b1ec3cb"
+          }
+        },
+        {
+          "client_id": "822199892407-iaurrfmng2me4d06pudscc4pie7vd7hs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrVwRaktKqVwejNBnLBDi0I_gFdT_agdA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "822199892407-iaurrfmng2me4d06pudscc4pie7vd7hs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
