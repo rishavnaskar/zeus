@@ -169,6 +169,8 @@ class _SignInScreenState extends State<SignInScreen>
                                 },
                               ),
                               Expanded(child: SizedBox(height: 20.0)),
+                              Text('Minimum 6 digits', style: TextStyle(color: Colors.white)),
+                              Expanded(child: SizedBox(height: 20.0)),
                               Align(
                                 alignment: Alignment.center,
                                 child: RaisedButton(

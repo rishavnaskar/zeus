@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:zeus/Main/Predictor/API/api.dart';
 import 'Components/index.dart';
+import 'dart:convert';
 
 class PredictorHomeScreen extends StatefulWidget {
   @override
@@ -16,6 +17,7 @@ class _PredictorHomeScreenState extends State<PredictorHomeScreen> {
   List<double> predictedCases = [];
   List<double> truthRecovery = [];
   List<double> predictedRecovery = [];
+  Image deathImage, casesImage, recoveryImage;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +34,10 @@ class _PredictorHomeScreenState extends State<PredictorHomeScreen> {
                 _api.getTruthCasesData(),
                 _api.getPredictedCasesData(),
                 _api.getTruthRecoveryData(),
-                _api.getPredictedRecoveryData()
+                _api.getPredictedRecoveryData(),
+                _api.getDeathImage(),
+                _api.getCasesImage(),
+                _api.getRecoveryImage()
               ]),
               builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
                 if (!snapshot.hasData || snapshot.hasError)
@@ -58,6 +63,9 @@ class _PredictorHomeScreenState extends State<PredictorHomeScreen> {
                 for (var snap in snapshot.data[5]) {
                   predictedRecovery.add(snap.toDouble());
                 }
+                deathImage = Image.memory(base64Decode(snapshot.data[6]));
+                casesImage = Image.memory(base64Decode(snapshot.data[7]));
+                recoveryImage = Image.memory(base64Decode(snapshot.data[8]));
                 return StaggeredGridView.count(
                   crossAxisCount: 4,
                   crossAxisSpacing: 4.0,
@@ -69,33 +77,33 @@ class _PredictorHomeScreenState extends State<PredictorHomeScreen> {
                             TextStyle(fontFamily: 'Montserrat', fontSize: 17)),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
+                      child: Index().chartItem(
+                          "Deaths So Far", truthDeath, null, context),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Index().chartItem("Predicted Deaths",
+                          predictedDeaths, deathImage, context),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Index()
-                          .chartItem("Deaths So Far", truthDeath, context),
+                          .chartItem("Cases So Far", truthCases, null, context),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Index().chartItem("Predicted Cases",
+                          predictedCases, casesImage, context),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Index().chartItem(
-                          "Predicted Deaths", predictedDeaths, context),
+                          "Patients Recovered", truthRecovery, null, context),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Index()
-                          .chartItem("Cases So Far", truthCases, context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Index().chartItem(
-                          "Predicted Cases", predictedCases, context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Index().chartItem(
-                          "Patients Recovered", truthRecovery, context),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Index().chartItem(
-                          "Predicted Recoveries", predictedRecovery, context),
+                      child: Index().chartItem("Predicted Recoveries",
+                          predictedRecovery, recoveryImage, context),
                     ),
                   ],
                   staggeredTiles: [

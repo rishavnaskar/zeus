@@ -13,7 +13,7 @@ class Components {
                 borderRadius: BorderRadius.all(Radius.circular(8.0))),
             title: Row(
               children: [
-                Text(header, style: TextStyle(fontFamily: 'Montserrat')),
+                FittedBox(child: Text(header, style: TextStyle(fontFamily: 'Montserrat'))),
                 Spacer(),
                 header == 'Uploading Image'
                     ? SizedBox(

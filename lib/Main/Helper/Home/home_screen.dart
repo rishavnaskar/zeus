@@ -276,7 +276,6 @@ class _HelperHomeScreenState extends State<HelperHomeScreen>
         if (mounted) {
           setState(() {
             email = user.email;
-            name = user.displayName;
             if (user.photoUrl != null) photoUrl = user.photoUrl;
             if (user.phoneNumber != null) phoneNumber = user.phoneNumber;
           });
@@ -288,6 +287,7 @@ class _HelperHomeScreenState extends State<HelperHomeScreen>
         if (mounted) {
           setState(() {
             for (var record in userRecords.documents) {
+              name = record.data['name'];
               if (record.data['needHelp'] != null) {
                 needHelp = record.data['needHelp'];
                 docId = record.documentID;

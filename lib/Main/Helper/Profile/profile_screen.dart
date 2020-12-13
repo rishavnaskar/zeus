@@ -119,33 +119,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       SizedBox(height: MediaQuery.of(context).size.width / 15)),
               ProfileDetailsEmail(email: email),
               SizedBox(height: 30.0),
-              ProfileDetailsPhone(phoneNumber: phoneNumber),
               Visibility(
                   visible: _isMyProfile,
                   child: Expanded(flex: 1, child: SizedBox(height: 20.0))),
-              Visibility(
-                visible: _isMyProfile,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text('Tap on a detail to edit',
-                        textAlign: TextAlign.right,
-                        style: TextStyle(
-                            color: Color(0xff520935),
-                            letterSpacing: 2.0,
-                            fontFamily: 'Montserrat')),
-                    SizedBox(width: 10.0),
-                    Icon(Icons.edit, size: 15.0, color: Color(0xff520935)),
-                  ],
-                ),
-              ),
               Expanded(
                   flex: 2,
                   child: SizedBox(
                       height: MediaQuery.of(context).size.height / 14)),
               Container(height: 1.0, color: Colors.grey),
               Expanded(
-                  flex: 2,
+                  flex: 1,
                   child: SizedBox(
                       height: MediaQuery.of(context).size.height / 25)),
               Row(
@@ -161,7 +144,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           fontFamily: 'Montserrat')),
                 ],
               ),
-              SizedBox(height: MediaQuery.of(context).size.height / 40),
+              Expanded(flex: 1, child: SizedBox(height: MediaQuery.of(context).size.height / 40)),
               (lat == null || long == null)
                   ? Text('Protected by user\'s privacy settings',
                       style: TextStyle(
@@ -179,7 +162,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             letterSpacing: 2.0,
                             fontWeight: FontWeight.w500,
                           )),
-              SizedBox(height: 10.0),
+              Expanded(flex: 2, child: SizedBox(height: 10.0)),
             ],
           ),
         ),
@@ -314,43 +297,6 @@ class ProfileDetailsEmail extends StatelessWidget {
   }
 }
 
-class ProfileDetailsPhone extends StatelessWidget {
-  ProfileDetailsPhone({@required this.phoneNumber});
-
-  final String phoneNumber;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        height: 55.0,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10.0),
-            boxShadow: [
-              BoxShadow(
-                  color: Colors.grey[400],
-                  blurRadius: 5.0,
-                  offset: Offset(3.0, 3.0))
-            ]),
-        child: ListTile(
-          enabled: false,
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-          leading: Icon(Icons.phone, color: Color(0xff520935)),
-          title: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Text(
-                  phoneNumber == null
-                      ? 'No phone number added'
-                      : '$phoneNumber',
-                  style: TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.normal,
-                      fontFamily: 'Montserrat'))),
-        ));
-  }
-}
-
 class FirstSection extends StatefulWidget {
   FirstSection({this.isMyProfile, this.name, this.image, this.hasImage});
 
@@ -389,10 +335,9 @@ class _FirstSectionState extends State<FirstSection> {
                     width: MediaQuery.of(context).size.width / 5,
                     height: MediaQuery.of(context).size.height / 10,
                     child: loading
-                        ? CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(Colors.white),
-                            backgroundColor: Color(0xff520935))
+                        ? CircleAvatar(
+                            child: Icon(Icons.person, color: Colors.black),
+                            backgroundColor: Colors.grey[500])
                         : FittedBox(
                             fit: BoxFit.fill, child: ClipOval(child: image))),
             Visibility(

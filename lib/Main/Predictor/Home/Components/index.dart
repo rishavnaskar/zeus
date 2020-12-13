@@ -4,7 +4,8 @@ import 'package:line_icons/line_icons.dart';
 import 'package:zeus/services/components.dart';
 
 class Index {
-  Material chartItem(String title, var data, BuildContext context) {
+  Material chartItem(
+      String title, var data, Image image, BuildContext context) {
     return Material(
       color: Color(0xff520935),
       elevation: 5.0,
@@ -13,12 +14,26 @@ class Index {
       child: Stack(
         children: [
           Align(
+            alignment: Alignment.topLeft,
+            child: image != null
+                ? IconButton(
+                    icon: Icon(LineIcons.bar_chart),
+                    color: Colors.white,
+                    onPressed: () => Components().neverSatisfied(
+                      'Graph',
+                      Container(child: image),
+                      context,
+                    ),
+                  )
+                : Container(),
+          ),
+          Align(
             alignment: Alignment.topRight,
             child: IconButton(
               icon: Icon(LineIcons.info_circle),
               color: Colors.white,
               onPressed: () => Components().neverSatisfied(
-                title,
+                'Actual Value',
                 Container(
                   height: 300,
                   width: 300,
@@ -26,7 +41,8 @@ class Index {
                     shrinkWrap: true,
                     itemCount: data.length,
                     itemBuilder: (context, index) {
-                      return Center(child: Text(data[index].toString()));
+                      return Center(
+                          child: Text(data[index].toInt().toString()));
                     },
                   ),
                 ),
