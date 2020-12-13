@@ -188,11 +188,11 @@ class _AlarmButtonState extends State<AlarmButton>
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 500));
 
-    Timer.periodic(
-        Duration(seconds: 6),
-        (timer) => _animationController.isDismissed
-            ? Index().runAnimation(_animationController)
-            : _animationController);
+    // Timer.periodic(
+    //     Duration(seconds: 6),
+    //     (timer) => _animationController.isDismissed
+    //         ? Index().runAnimation(_animationController)
+    //         : _animationController);
     super.initState();
   }
 

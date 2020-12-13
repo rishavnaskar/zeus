@@ -1,21 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:workmanager/workmanager.dart';
-import 'package:zeus/Notification/local_notification.dart';
 import 'package:zeus/services/authservice.dart';
 
-void callbackDispatcher() {
-  Workmanager.executeTask((taskName, inputData) async {
-    LocalNotification.initializer();
-    LocalNotification.showOneTimeNotification(DateTime.now());
-    return Future.value(true);
-  });
-}
-
 void main() {
-  WidgetsFlutterBinding.ensureInitialized();
-  Workmanager.initialize(callbackDispatcher, isInDebugMode: true);
-  Workmanager.registerPeriodicTask("test_work", "test_worker",
-      frequency: Duration(minutes: 15));
   runApp(MyApp());
 }
 

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:zeus/Main/Helper/Requests/request_screen.dart';
 import 'package:zeus/Main/Helper/Response/response_screen.dart';
 
-
 class HomeCenterWidgets extends StatelessWidget {
   HomeCenterWidgets({this.headerText, this.iconData, this.email, this.docId});
 

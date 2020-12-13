@@ -13,16 +13,16 @@ import 'components/index.dart';
 
 String photoUrl;
 
-class HomeScreen extends StatefulWidget {
-  HomeScreen({this.name});
+class HelperHomeScreen extends StatefulWidget {
+  HelperHomeScreen({this.name});
 
   final String name;
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HelperHomeScreenState createState() => _HelperHomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen>
+class _HelperHomeScreenState extends State<HelperHomeScreen>
     with SingleTickerProviderStateMixin {
   bool isLoading = false, needHelp, alarm;
   String email, name, docId, googleId, phoneNumber;

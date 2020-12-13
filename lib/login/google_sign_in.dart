@@ -44,7 +44,7 @@ class GoogleLoginIn {
         }
       });
       if (result.user != null) {
-        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
+        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HelperHomeScreen()));
       }
     } catch (error) {
       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => StartScreen()));
@@ -63,7 +63,7 @@ class GoogleLoginIn {
       final result = await _firebaseAuth.signInWithEmailAndPassword(
           email: email.trim(), password: password);
       if (result.user != null)
-        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HomeScreen()));
+        Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => HelperHomeScreen()));
     } catch (error) {
       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => StartScreen()));
       Components().neverSatisfied('$error', null, context);
@@ -92,7 +92,7 @@ class GoogleLoginIn {
         userUpdateInfo.displayName = name;
         user.updateProfile(userUpdateInfo);
         Navigator.pushReplacement(
-            context, CupertinoPageRoute(builder: (context) => HomeScreen()));
+            context, CupertinoPageRoute(builder: (context) => HelperHomeScreen()));
       }
     } catch (error) {
       Navigator.pushReplacement(context, CupertinoPageRoute(builder: (context) => StartScreen()));

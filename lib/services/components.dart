@@ -6,7 +6,7 @@ class Components {
       String header, Widget body, BuildContext context) async {
     return showDialog<void>(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: header == 'Uploading Image' ? false : true,
         builder: (BuildContext context) {
           return AlertDialog(
             shape: RoundedRectangleBorder(
@@ -15,14 +15,17 @@ class Components {
               children: [
                 Text(header, style: TextStyle(fontFamily: 'Montserrat')),
                 Spacer(),
-                SizedBox(
-                  height: 20.0,
-                  width: 20.0,
-                  child: CircularProgressIndicator(
-                      strokeWidth: 2.0,
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                      backgroundColor: Color(0xff520935)),
-                ),
+                header == 'Uploading Image'
+                    ? SizedBox(
+                        height: 20.0,
+                        width: 20.0,
+                        child: CircularProgressIndicator(
+                            strokeWidth: 2.0,
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                            backgroundColor: Color(0xff520935)),
+                      )
+                    : Container(),
               ],
             ),
             content: body,

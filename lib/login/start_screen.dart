@@ -140,11 +140,10 @@ class StartCarousel extends StatelessWidget {
           child: Carousel(
             images: [
               ExactAssetImage('assets/image1.jpg'),
-              ExactAssetImage('assets/image2.jpg', scale: 0.5),
+              ExactAssetImage('assets/image4.jpg'),
               ExactAssetImage('assets/image3.jpg'),
             ],
             showIndicator: true,
-            autoplayDuration: Duration(seconds: 8),
             animationDuration: Duration(seconds: 1),
             dotBgColor: Colors.white.withOpacity(0.2),
             dotIncreasedColor: Colors.red,
