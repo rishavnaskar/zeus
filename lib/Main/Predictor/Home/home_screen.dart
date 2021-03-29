@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:zeus/Main/Predictor/API/api.dart';
 import 'Components/index.dart';
-import 'dart:convert';
 
 class PredictorHomeScreen extends StatefulWidget {
   @override
@@ -28,44 +27,43 @@ class _PredictorHomeScreenState extends State<PredictorHomeScreen> {
         child: Container(
           padding: EdgeInsets.symmetric(horizontal: 15),
           child: FutureBuilder(
-              future: Future.wait([
-                _api.getTruthDeathData(),
-                _api.getPredictedDeathData(),
-                _api.getTruthCasesData(),
-                _api.getPredictedCasesData(),
-                _api.getTruthRecoveryData(),
-                _api.getPredictedRecoveryData(),
-                _api.getDeathImage(),
-                _api.getCasesImage(),
-                _api.getRecoveryImage()
-              ]),
-              builder: (context, AsyncSnapshot<List<dynamic>> snapshot) {
-                if (!snapshot.hasData || snapshot.hasError)
-                  return Center(
-                      child: CircularProgressIndicator(
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              Color(0xff520935))));
-                for (var snap in snapshot.data[0]) {
+            future: Future.wait([
+              _api.getTruthDeathData(),
+              _api.getPredictedDeathData(),
+              _api.getTruthCasesData(),
+              _api.getPredictedCasesData(),
+              _api.getTruthRecoveryData(),
+              _api.getPredictedRecoveryData(),
+            ]),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                print(snapshot.error);
+                return Center(child: Icon(Icons.error, color: Colors.black));
+              }
+              if (snapshot.connectionState == ConnectionState.waiting)
+                return Center(
+                    child: CircularProgressIndicator(
+                        valueColor:
+                            AlwaysStoppedAnimation<Color>(Color(0xff520935))));
+              if (snapshot.hasData) {
+                for (var snap in snapshot.data[0])
                   truthDeath.add(snap.toDouble());
-                }
-                for (var snap in snapshot.data[1]) {
+
+                for (var snap in snapshot.data[1])
                   predictedDeaths.add(snap.toDouble());
-                }
-                for (var snap in snapshot.data[2]) {
+
+                for (var snap in snapshot.data[2])
                   truthCases.add(snap.toDouble());
-                }
-                for (var snap in snapshot.data[3]) {
+
+                for (var snap in snapshot.data[3])
                   predictedCases.add(snap.toDouble());
-                }
-                for (var snap in snapshot.data[4]) {
+
+                for (var snap in snapshot.data[4])
                   truthRecovery.add(snap.toDouble());
-                }
-                for (var snap in snapshot.data[5]) {
+
+                for (var snap in snapshot.data[5])
                   predictedRecovery.add(snap.toDouble());
-                }
-                deathImage = Image.memory(base64Decode(snapshot.data[6]));
-                casesImage = Image.memory(base64Decode(snapshot.data[7]));
-                recoveryImage = Image.memory(base64Decode(snapshot.data[8]));
+
                 return StaggeredGridView.count(
                   crossAxisCount: 4,
                   crossAxisSpacing: 4.0,
@@ -77,33 +75,33 @@ class _PredictorHomeScreenState extends State<PredictorHomeScreen> {
                             TextStyle(fontFamily: 'Montserrat', fontSize: 17)),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Index().chartItem(
-                          "Deaths So Far", truthDeath, null, context),
+                      child: Index().chartItem("Deaths So Far", true,
+                          _api.getDeathImage(), truthDeath, context),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Index().chartItem("Predicted Deaths",
-                          predictedDeaths, deathImage, context),
+                      child: Index().chartItem("Predicted Deaths", false,
+                          _api.getDeathImage(), predictedDeaths, context),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Index()
-                          .chartItem("Cases So Far", truthCases, null, context),
+                      child: Index().chartItem("Cases So Far", true,
+                          _api.getCasesImage(), truthCases, context),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Index().chartItem("Predicted Cases",
-                          predictedCases, casesImage, context),
+                      child: Index().chartItem("Predicted Cases", false,
+                          _api.getCasesImage(), predictedCases, context),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Index().chartItem(
-                          "Patients Recovered", truthRecovery, null, context),
+                      child: Index().chartItem("Patients Recovered", true,
+                          _api.getRecoveryImage(), truthRecovery, context),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(8.0),
-                      child: Index().chartItem("Predicted Recoveries",
-                          predictedRecovery, recoveryImage, context),
+                      child: Index().chartItem("Predicted Recoveries", false,
+                          _api.getRecoveryImage(), predictedRecovery, context),
                     ),
                   ],
                   staggeredTiles: [
@@ -117,7 +115,10 @@ class _PredictorHomeScreenState extends State<PredictorHomeScreen> {
                     StaggeredTile.extent(4, 200),
                   ],
                 );
-              }),
+              }
+              return Container();
+            },
+          ),
         ),
       ),
     );

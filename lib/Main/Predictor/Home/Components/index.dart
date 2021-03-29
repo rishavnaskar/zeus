@@ -1,11 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_sparkline/flutter_sparkline.dart';
 import 'package:line_icons/line_icons.dart';
 import 'package:zeus/services/components.dart';
 
 class Index {
-  Material chartItem(
-      String title, var data, Image image, BuildContext context) {
+  Material chartItem(String title, bool hasGraph, Future futureFunction,
+      var data, BuildContext context) {
     return Material(
       color: Color(0xff520935),
       elevation: 5.0,
@@ -13,19 +15,45 @@ class Index {
       shadowColor: Color(0xff303030),
       child: Stack(
         children: [
-          Align(
-            alignment: Alignment.topLeft,
-            child: image != null
-                ? IconButton(
-                    icon: Icon(LineIcons.bar_chart),
-                    color: Colors.white,
-                    onPressed: () => Components().neverSatisfied(
-                      'Graph',
-                      Container(child: image),
-                      context,
-                    ),
-                  )
-                : Container(),
+          Visibility(
+            visible: hasGraph,
+            child: Align(
+              alignment: Alignment.topLeft,
+              child: IconButton(
+                icon: Icon(LineIcons.bar_chart),
+                color: Colors.white,
+                onPressed: () => Components().neverSatisfied(
+                  'Original Graph',
+                  FutureBuilder(
+                    future: futureFunction,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasError) {
+                        print(snapshot.error);
+                        return Center(
+                            child: Icon(Icons.error, color: Colors.black));
+                      }
+                      if (snapshot.connectionState == ConnectionState.waiting)
+                        return SizedBox(
+                          height: 60,
+                          width: double.infinity,
+                          child: Center(
+                              child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Color(0xff520935)))),
+                        );
+
+                      if (snapshot.hasData) {
+                        Image image = Image.memory(base64Decode(snapshot.data));
+
+                        return image;
+                      }
+                      return Container();
+                    },
+                  ),
+                  context,
+                ),
+              ),
+            ),
           ),
           Align(
             alignment: Alignment.topRight,
